@@ -56,7 +56,7 @@ namespace RetailOrderInventoryAnalytics.API.Services
                 ReorderLevel = p.ReorderLevel
             };
         }
-
+        // Below method is for US14: Include Category and Supplier Info in Low Stock Products
         public async Task<IEnumerable<ProductDto>> GetLowStockProductsAsync()
         {
             var products = await _productRepository.GetLowStockProductsAsync();
@@ -65,8 +65,17 @@ namespace RetailOrderInventoryAnalytics.API.Services
             {
                 ProductId = p.ProductId,
                 ProductName = p.ProductName,
+
                 CategoryId = p.CategoryId,
+
+                // US14: Include Category Name in Low Stock Products
+                CategoryName = p.Category?.CategoryName ?? "",
+
                 SupplierId = p.SupplierId,
+
+                // US14: Include Supplier Name in Low Stock Products
+                SupplierName = p.Supplier?.SupplierName ?? "",
+
                 UnitPrice = p.UnitPrice,
                 StockQuantity = p.StockQuantity,
                 ReorderLevel = p.ReorderLevel

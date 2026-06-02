@@ -3,25 +3,25 @@
     ViewData["Title"] = "Reports";
 }
 <div class="row g-3 mb-4">
-    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Report Date</div><div class="stat-value">@Model.SalesSummary.ReportDate.ToString("yyyy-MM-dd")</div></div></div>
-    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Total Sales</div><div class="stat-value">@Model.SalesSummary.TotalSales.ToString("C")</div></div></div>
-    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Average Order Value</div><div class="stat-value">@Model.SalesSummary.AverageOrderValue.ToString("C")</div></div></div>
-    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value">@Model.SalesSummary.TotalOrders</div></div></div>
+    <div class="col-md-4"><div class="card border-left-primary shadow h-100 py-2"><div class="card-body"><div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Report Date</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SalesSummary.ReportDate.ToString("yyyy-MM-dd")</div></div></div></div>
+    <div class="col-md-4"><div class="card border-left-success shadow h-100 py-2"><div class="card-body"><div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Sales</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SalesSummary.TotalSales.ToString("C")</div></div></div></div>
+    <div class="col-md-4"><div class="card border-left-info shadow h-100 py-2"><div class="card-body"><div class="text-xs font-weight-bold text-info text-uppercase mb-1">Average Order Value</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SalesSummary.AverageOrderValue.ToString("C")</div></div></div></div>
+    <div class="col-md-4"><div class="card border-left-warning shadow h-100 py-2"><div class="card-body"><div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total Orders</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.SalesSummary.TotalOrders</div></div></div></div>
 </div>
-<div class="panel">
-    <h2 class="h5 mb-3">Inventory Summary</h2>
-    <div class="table-responsive">
-        <table class="table table-hover">
+<div class="card shadow mb-4">
+    <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Inventory Summary</h6></div>
+    <div class="card-body"><div class="table-responsive">
+        <table class="table table-bordered data-table" width="100%" cellspacing="0">
             <thead><tr><th>Product</th><th>Stock</th><th>Reorder Level</th><th>Status</th></tr></thead>
             <tbody>
             @foreach (var item in Model.InventorySummary)
             {
                 <tr>
                     <td>@item.ProductName</td><td>@item.StockQuantity</td><td>@item.ReorderLevel</td>
-                    <td>@if (item.IsLowStock) { <span class="badge text-bg-danger">Low stock</span> } else { <span class="badge text-bg-success">Healthy</span> }</td>
+                    <td>@if (item.IsLowStock) { <span class="badge badge-danger">Low stock</span> } else { <span class="badge badge-success">Healthy</span> }</td>
                 </tr>
             }
             </tbody>
         </table>
-    </div>
+    </div></div>
 </div>

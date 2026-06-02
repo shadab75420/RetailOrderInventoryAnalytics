@@ -2,7 +2,9 @@
     var token = Context.Session.GetString("JWToken");
     var username = Context.Session.GetString("Username") ?? "User";
     var role = Context.Session.GetString("Role") ?? string.Empty;
-    var canManage = role == "Admin" || role == "Manager";
+    var isAdmin = role == "Admin";
+    var isManager = role == "Manager";
+    var isStaff = role == "Staff";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -10,57 +12,98 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Retail Analytics</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/sbadmin/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="~/sbadmin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 </head>
-<body>
+<body id="page-top">
     @if (string.IsNullOrWhiteSpace(token))
     {
-        <main class="auth-shell">
+        <main class="auth-shell bg-gradient-primary">
             @RenderBody()
         </main>
     }
     else
     {
-        <div class="app-shell">
-            <aside class="app-sidebar">
-                <div class="brand">Retail Analytics</div>
-                <nav class="nav flex-column">
-                    <a class="nav-link" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                    <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
-                    <a class="nav-link" asp-controller="Supplier" asp-action="Index">Suppliers</a>
-                    <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
-                    <a class="nav-link" asp-controller="Inventory" asp-action="Index">Inventory</a>
-                    <a class="nav-link" asp-controller="Order" asp-action="Index">Orders</a>
-                    @if (canManage)
-                    {
-                        <a class="nav-link" asp-controller="Reports" asp-action="Index">Reports</a>
-                    }
-                </nav>
-            </aside>
-            <div class="app-main">
-                <header class="topbar">
-                    <div>
-                        <div class="page-kicker">Retail Order & Inventory Analytics</div>
-                        <h1>@ViewData["Title"]</h1>
+        <div id="wrapper">
+            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Dashboard" asp-action="Index">
+                    <div class="sidebar-brand-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="sidebar-brand-text mx-3">Retail Analytics</div>
+                </a>
+                <hr class="sidebar-divider my-0" />
+                <li class="nav-item"><a class="nav-link" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                @if (isAdmin)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Index"><i class="fas fa-fw fa-users-cog"></i><span>Users</span></a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Category" asp-action="Index"><i class="fas fa-fw fa-tags"></i><span>Categories</span></a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Supplier" asp-action="Index"><i class="fas fa-fw fa-truck"></i><span>Suppliers</span></a></li>
+                }
+                @if (isAdmin || isManager || isStaff)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="Index"><i class="fas fa-fw fa-box"></i><span>Products</span></a></li>
+                }
+                @if (isAdmin || isManager)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Inventory" asp-action="Index"><i class="fas fa-fw fa-warehouse"></i><span>Inventory</span></a></li>
+                }
+                @if (isAdmin || isManager || isStaff)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="Index"><i class="fas fa-fw fa-shopping-cart"></i><span>Orders</span></a></li>
+                }
+                @if (isAdmin)
+                {
+                    <li class="nav-item"><a class="nav-link" asp-controller="Reports" asp-action="Index"><i class="fas fa-fw fa-file-alt"></i><span>Reports</span></a></li>
+                }
+                <hr class="sidebar-divider d-none d-md-block" />
+                <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+            </ul>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                        <h1 class="h5 mb-0 text-gray-800">@ViewData["Title"]</h1>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@username</span>
+                                    @if (!string.IsNullOrWhiteSpace(role))
+                                    {
+                                        <span class="badge badge-primary mr-2">@role</span>
+                                    }
+                                    <img class="img-profile rounded-circle" src="~/sbadmin/img/undraw_profile.svg" alt="Profile" />
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="container-fluid">
+                        @RenderBody()
                     </div>
-                    <div class="user-chip">
-                        <span>@username</span>
-                        @if (!string.IsNullOrWhiteSpace(role))
-                        {
-                            <span class="badge text-bg-primary">@role</span>
-                        }
-                        <a class="btn btn-outline-secondary btn-sm" asp-controller="Account" asp-action="Logout">Logout</a>
+                </div>
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Retail Order & Inventory Analytics</span>
+                        </div>
                     </div>
-                </header>
-                <main class="content">
-                    @RenderBody()
-                </main>
+                </footer>
             </div>
         </div>
+        <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
     }
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/sbadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="~/sbadmin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/sbadmin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/sbadmin/vendor/chart.js/Chart.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

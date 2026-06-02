@@ -9,7 +9,14 @@ namespace RetailOrderInventoryAnalytics.API.Mappings
         public MappingProfile()
         {
             // US1: User Mapping
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserDto>()
+                .ForMember(
+                    dest => dest.RoleName,
+                    opt => opt.MapFrom(
+                        src => src.Role == null
+                            ? string.Empty
+                            : src.Role.RoleName))
+                .ReverseMap();
 
             // US2: Category Mapping
             CreateMap<Category, CategoryDto>().ReverseMap();

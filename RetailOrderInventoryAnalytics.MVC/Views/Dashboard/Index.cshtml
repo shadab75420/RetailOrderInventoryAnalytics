@@ -1,27 +1,104 @@
 @model DashboardViewModel
+@using System.Text.Json
 @{
     ViewData["Title"] = "Dashboard";
     var lowStock = ViewBag.LowStockProducts as List<ProductViewModel> ?? new();
+    var salesLabels = JsonSerializer.Serialize(Model.MonthlySalesTrend.Select(x => x.Month));
+    var salesValues = JsonSerializer.Serialize(Model.MonthlySalesTrend.Select(x => x.TotalSales));
+    var categoryLabels = JsonSerializer.Serialize(Model.CategoryDistribution.Select(x => x.CategoryName));
+    var categoryValues = JsonSerializer.Serialize(Model.CategoryDistribution.Select(x => x.ProductCount));
 }
-<div class="row g-3 mb-4">
-    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">@Model.TotalProducts</div></div></div>
-    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Categories</div><div class="stat-value">@Model.TotalCategories</div></div></div>
-    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Suppliers</div><div class="stat-value">@Model.TotalSuppliers</div></div></div>
-    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value">@Model.TotalOrders</div></div></div>
-    <div class="col-md-6 col-xl-3"><div class="stat-card warning"><div class="stat-label">Low Stock Products</div><div class="stat-value">@Model.LowStockProducts</div></div></div>
-    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value">@Model.TotalRevenue.ToString("C")</div></div></div>
+<!-- US14: Dashboard Enhancement -->
+<div class="row">
+    <div class="col-xl-2 col-md-4 mb-4"><div class="card border-left-primary shadow h-100 py-2 card-dashboard"><div class="card-body"><div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Products</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalProducts</div></div></div></div>
+    <div class="col-xl-2 col-md-4 mb-4"><div class="card border-left-success shadow h-100 py-2 card-dashboard"><div class="card-body"><div class="text-xs font-weight-bold text-success text-uppercase mb-1">Categories</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalCategories</div></div></div></div>
+    <div class="col-xl-2 col-md-4 mb-4"><div class="card border-left-info shadow h-100 py-2 card-dashboard"><div class="card-body"><div class="text-xs font-weight-bold text-info text-uppercase mb-1">Suppliers</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalSuppliers</div></div></div></div>
+    <div class="col-xl-2 col-md-4 mb-4"><div class="card border-left-warning shadow h-100 py-2 card-dashboard"><div class="card-body"><div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Orders</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalOrders</div></div></div></div>
+    <div class="col-xl-2 col-md-4 mb-4"><div class="card border-left-danger shadow h-100 py-2 card-dashboard"><div class="card-body"><div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Low Stock</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.LowStockProducts</div></div></div></div>
+    <div class="col-xl-2 col-md-4 mb-4"><div class="card border-left-secondary shadow h-100 py-2 card-dashboard"><div class="card-body"><div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Revenue</div><div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalRevenue.ToString("C")</div></div></div></div>
 </div>
-<div class="panel">
-    <h2 class="h5 mb-3">Low Stock Products</h2>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead><tr><th>Product</th><th>Category</th><th>Supplier</th><th>Stock</th><th>Reorder</th></tr></thead>
-            <tbody>
-            @foreach (var item in lowStock)
-            {
-                <tr><td>@item.ProductName</td><td>@item.CategoryName</td><td>@item.SupplierName</td><td>@item.StockQuantity</td><td>@item.ReorderLevel</td></tr>
-            }
-            </tbody>
-        </table>
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Monthly Sales Trend</h6></div>
+            <div class="card-body"><div class="chart-area"><canvas id="salesTrendChart"></canvas></div></div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Category Distribution</h6></div>
+            <div class="card-body"><div class="chart-pie pt-4"><canvas id="categoryPieChart"></canvas></div></div>
+        </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Low Stock Products</h6></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered data-table" width="100%" cellspacing="0">
+                        <thead><tr><th>Product</th><th>Category</th><th>Supplier</th><th>Current Stock</th><th>Reorder Level</th></tr></thead>
+                        <tbody>
+                        @foreach (var item in lowStock)
+                        {
+                            <tr><td>@item.ProductName</td><td>@item.CategoryName</td><td>@item.SupplierName</td><td><span class="badge badge-danger">@item.StockQuantity</span></td><td>@item.ReorderLevel</td></tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Recent Inventory Transactions</h6></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered data-table" width="100%" cellspacing="0">
+                        <thead><tr><th>Product</th><th>Type</th><th>Qty</th><th>Date</th></tr></thead>
+                        <tbody>
+                            @foreach (var item in Model.RecentTransactions)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+
+                                    <td>
+                                        @if (item.TransactionType == "IN")
+                                        {
+                                            <span class="badge bg-success">IN</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">OUT</span>
+                                        }
+                                    </td>
+
+                                    <td>@item.Quantity</td>
+
+                                    <td>
+                                        @item.TransactionDate.ToString("yyyy-MM-dd")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        new Chart(document.getElementById('salesTrendChart'), {
+            type: 'line',
+            data: { labels: @Html.Raw(salesLabels), datasets: [{ label: 'Sales', data: @Html.Raw(salesValues), borderColor: '#4e73df', backgroundColor: 'rgba(78, 115, 223, .08)', pointRadius: 3, fill: true }] },
+            options: { maintainAspectRatio: false, legend: { display: false }, scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
+        });
+        new Chart(document.getElementById('categoryPieChart'), {
+            type: 'pie',
+            data: { labels: @Html.Raw(categoryLabels), datasets: [{ data: @Html.Raw(categoryValues), backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796'] }] },
+            options: { maintainAspectRatio: false }
+        });
+    </script>
+}

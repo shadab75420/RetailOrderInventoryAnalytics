@@ -30,6 +30,7 @@ public class AuthApiService
         var principal = ReadToken(result.Token);
         session?.SetString("Username", principal.Username);
         session?.SetString("Role", principal.Role);
+        session?.SetString("UserId", principal.UserId);
         return true;
     }
 
@@ -37,12 +38,13 @@ public class AuthApiService
 
     public void Logout() => _httpContextAccessor.HttpContext?.Session.Clear();
 
-    private static (string Username, string Role) ReadToken(string token)
+    private static (string Username, string Role, string UserId) ReadToken(string token)
     {
         var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
         var username = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name || c.Type == "unique_name" || c.Type == "name")?.Value ?? "User";
         var role = jwt.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role || c.Type == "role")?.Value ?? string.Empty;
-        return (username, role);
+        var userId = jwt.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value ?? string.Empty;
+        return (username, role, userId);
     }
 
     private class LoginResponse

@@ -1,0 +1,31 @@
+@model IEnumerable<UserViewModel>
+@{
+    ViewData["Title"] = "Users";
+}
+<!-- US13: User Management -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">User Management</h6></div>
+    <div class="card-body">
+        @if (TempData["Success"] is string message)
+        {
+            <div class="alert alert-success">@message</div>
+        }
+        <div class="table-responsive">
+            <table class="table table-bordered data-table" width="100%" cellspacing="0">
+                <thead><tr><th>UserId</th><th>Full Name</th><th>Username</th><th>Current Role</th><th>Actions</th></tr></thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserId</td>
+                        <td>@item.FullName</td>
+                        <td>@item.Username</td>
+                        <td><span class="badge badge-primary">@item.RoleName</span></td>
+                        <td><a class="btn btn-sm btn-primary" asp-action="EditRole" asp-route-id="@item.UserId"><i class="fas fa-user-cog mr-1"></i>Change Role</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

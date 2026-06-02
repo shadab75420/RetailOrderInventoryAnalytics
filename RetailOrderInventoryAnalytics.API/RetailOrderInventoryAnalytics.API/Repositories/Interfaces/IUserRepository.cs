@@ -10,6 +10,8 @@ namespace RetailOrderInventoryAnalytics.API.Repositories.Interfaces
 
         Task<User?> GetUserByUsernameAsync(string username);
 
+        Task<Role?> GetRoleByNameAsync(string roleName);
+
         Task AddUserAsync(User user);
 
         void UpdateUser(User user);

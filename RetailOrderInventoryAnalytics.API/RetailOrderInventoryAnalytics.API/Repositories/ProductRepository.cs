@@ -33,6 +33,8 @@ namespace RetailOrderInventoryAnalytics.API.Repositories
         public async Task<IEnumerable<Product>> GetLowStockProductsAsync()
         {
             return await _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Supplier)
                 .Where(x => x.StockQuantity <= x.ReorderLevel)
                 .ToListAsync();
         }

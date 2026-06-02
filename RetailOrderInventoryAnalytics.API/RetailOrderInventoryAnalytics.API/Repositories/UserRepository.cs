@@ -35,6 +35,12 @@ namespace RetailOrderInventoryAnalytics.API.Repositories
                 .FirstOrDefaultAsync(x => x.Username == username);
         }
 
+        public async Task<Role?> GetRoleByNameAsync(string roleName)
+        {
+            return await _context.Roles
+                .FirstOrDefaultAsync(x => x.RoleName == roleName);
+        }
+
         public async Task AddUserAsync(User user)
         {
             await _context.Users.AddAsync(user);

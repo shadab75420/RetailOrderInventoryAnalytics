@@ -11,6 +11,7 @@ builder.Services.AddHttpClient("ApiClient", client =>
 
 builder.Services.AddScoped<RetailOrderInventoryAnalytics.MVC.Services.ApiService>();
 builder.Services.AddScoped<RetailOrderInventoryAnalytics.MVC.Services.AuthApiService>();
+builder.Services.AddScoped<RetailOrderInventoryAnalytics.MVC.Services.UserApiService>();
 builder.Services.AddScoped<RetailOrderInventoryAnalytics.MVC.Services.CategoryApiService>();
 builder.Services.AddScoped<RetailOrderInventoryAnalytics.MVC.Services.SupplierApiService>();
 builder.Services.AddScoped<RetailOrderInventoryAnalytics.MVC.Services.ProductApiService>();

@@ -3,13 +3,13 @@
     ViewData["Title"] = "Suppliers";
     var canManage = Context.Session.GetString("Role") is "Admin" or "Manager";
 }
-<div class="panel">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h5 mb-0">Supplier List</h2>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Supplier List</h6>
         @if (canManage) { <a class="btn btn-primary btn-sm" asp-action="Create">Create</a> }
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover">
+    <div class="card-body"><div class="table-responsive">
+        <table class="table table-bordered data-table" width="100%" cellspacing="0">
             <thead><tr><th>Name</th><th>Contact</th><th>Phone</th><th>Email</th><th class="text-end">Actions</th></tr></thead>
             <tbody>
             @foreach (var item in Model)
@@ -24,5 +24,5 @@
             }
             </tbody>
         </table>
-    </div>
+    </div></div>
 </div>

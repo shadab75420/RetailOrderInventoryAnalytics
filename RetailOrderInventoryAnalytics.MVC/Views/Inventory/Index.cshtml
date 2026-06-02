@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Inventory";
 }
-<div class="panel mb-3">
+<div class="card shadow mb-4">
+    <div class="card-body">
     <form asp-action="Index" method="get" class="row g-2 align-items-end">
         <div class="col-md-4">
             <label class="form-label" for="productId">Product Id</label>
@@ -13,11 +14,12 @@
             <a class="btn btn-outline-secondary" asp-action="Index">Clear</a>
         </div>
     </form>
+    </div>
 </div>
-<div class="panel">
-    <h2 class="h5 mb-3">Stock Movement History</h2>
-    <div class="table-responsive">
-        <table class="table table-hover">
+<div class="card shadow mb-4">
+    <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">Stock Movement History</h6></div>
+    <div class="card-body"><div class="table-responsive">
+        <table class="table table-bordered data-table" width="100%" cellspacing="0">
             <thead><tr><th>Date</th><th>Product</th><th>Type</th><th>Quantity</th><th>Product Id</th></tr></thead>
             <tbody>
             @foreach (var item in Model)
@@ -25,12 +27,12 @@
                 <tr>
                     <td>@item.TransactionDate.ToString("yyyy-MM-dd")</td>
                     <td>@item.ProductName</td>
-                    <td><span class="badge text-bg-secondary">@item.TransactionType</span></td>
+                    <td><span class="badge badge-secondary">@item.TransactionType</span></td>
                     <td>@item.Quantity</td>
                     <td>@item.ProductId</td>
                 </tr>
             }
             </tbody>
         </table>
-    </div>
+    </div></div>
 </div>

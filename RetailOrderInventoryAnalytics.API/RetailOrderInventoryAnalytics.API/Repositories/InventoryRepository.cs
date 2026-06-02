@@ -24,6 +24,7 @@ namespace RetailOrderInventoryAnalytics.API.Repositories
         public async Task<IEnumerable<InventoryTransaction>> GetProductTransactionsAsync(int productId)
         {
             return await _context.InventoryTransactions
+                .Include(x => x.Product)
                 .Where(x => x.ProductId == productId)
                 .ToListAsync();
         }
