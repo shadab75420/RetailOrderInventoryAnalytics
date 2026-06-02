@@ -1,0 +1,27 @@
+@model ReportsViewModel
+@{
+    ViewData["Title"] = "Reports";
+}
+<div class="row g-3 mb-4">
+    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Report Date</div><div class="stat-value">@Model.SalesSummary.ReportDate.ToString("yyyy-MM-dd")</div></div></div>
+    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Total Sales</div><div class="stat-value">@Model.SalesSummary.TotalSales.ToString("C")</div></div></div>
+    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Average Order Value</div><div class="stat-value">@Model.SalesSummary.AverageOrderValue.ToString("C")</div></div></div>
+    <div class="col-md-4"><div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value">@Model.SalesSummary.TotalOrders</div></div></div>
+</div>
+<div class="panel">
+    <h2 class="h5 mb-3">Inventory Summary</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead><tr><th>Product</th><th>Stock</th><th>Reorder Level</th><th>Status</th></tr></thead>
+            <tbody>
+            @foreach (var item in Model.InventorySummary)
+            {
+                <tr>
+                    <td>@item.ProductName</td><td>@item.StockQuantity</td><td>@item.ReorderLevel</td>
+                    <td>@if (item.IsLowStock) { <span class="badge text-bg-danger">Low stock</span> } else { <span class="badge text-bg-success">Healthy</span> }</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

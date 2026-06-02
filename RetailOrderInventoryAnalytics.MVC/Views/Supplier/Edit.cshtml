@@ -1,0 +1,17 @@
+@model SupplierViewModel
+@{
+    ViewData["Title"] = "Edit Supplier";
+}
+<div class="panel form-panel">
+    <form asp-action="Edit" method="post">
+        <input asp-for="SupplierId" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <div class="mb-3"><label asp-for="SupplierName" class="form-label"></label><input asp-for="SupplierName" class="form-control" /><span asp-validation-for="SupplierName" class="text-danger"></span></div>
+        <div class="mb-3"><label asp-for="ContactPerson" class="form-label"></label><input asp-for="ContactPerson" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="PhoneNumber" class="form-label"></label><input asp-for="PhoneNumber" class="form-control" /></div>
+        <div class="mb-3"><label asp-for="Email" class="form-label"></label><input asp-for="Email" class="form-control" /><span asp-validation-for="Email" class="text-danger"></span></div>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+    </form>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

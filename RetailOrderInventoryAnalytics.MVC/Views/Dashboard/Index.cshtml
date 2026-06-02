@@ -1,0 +1,27 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    var lowStock = ViewBag.LowStockProducts as List<ProductViewModel> ?? new();
+}
+<div class="row g-3 mb-4">
+    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value">@Model.TotalProducts</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Categories</div><div class="stat-value">@Model.TotalCategories</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Suppliers</div><div class="stat-value">@Model.TotalSuppliers</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value">@Model.TotalOrders</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="stat-card warning"><div class="stat-label">Low Stock Products</div><div class="stat-value">@Model.LowStockProducts</div></div></div>
+    <div class="col-md-6 col-xl-3"><div class="stat-card"><div class="stat-label">Total Revenue</div><div class="stat-value">@Model.TotalRevenue.ToString("C")</div></div></div>
+</div>
+<div class="panel">
+    <h2 class="h5 mb-3">Low Stock Products</h2>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead><tr><th>Product</th><th>Category</th><th>Supplier</th><th>Stock</th><th>Reorder</th></tr></thead>
+            <tbody>
+            @foreach (var item in lowStock)
+            {
+                <tr><td>@item.ProductName</td><td>@item.CategoryName</td><td>@item.SupplierName</td><td>@item.StockQuantity</td><td>@item.ReorderLevel</td></tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

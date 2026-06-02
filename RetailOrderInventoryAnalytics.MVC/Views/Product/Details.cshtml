@@ -1,0 +1,16 @@
+@model ProductViewModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+<div class="panel">
+    <div class="details-grid">
+        <strong>Product Id</strong><span>@Model.ProductId</span>
+        <strong>Name</strong><span>@Model.ProductName</span>
+        <strong>Category</strong><span>@Model.CategoryName</span>
+        <strong>Supplier</strong><span>@Model.SupplierName</span>
+        <strong>Unit Price</strong><span>@Model.UnitPrice.ToString("C")</span>
+        <strong>Stock</strong><span>@Model.StockQuantity</span>
+        <strong>Reorder Level</strong><span>@Model.ReorderLevel</span>
+    </div>
+    <div class="mt-3"><a class="btn btn-outline-secondary" asp-action="Index">Back</a></div>
+</div>

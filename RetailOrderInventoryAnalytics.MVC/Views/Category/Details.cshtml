@@ -1,0 +1,11 @@
+@model CategoryViewModel
+@{
+    ViewData["Title"] = "Category Details";
+}
+<div class="panel">
+    <div class="details-grid">
+        <strong>Category Id</strong><span>@Model.CategoryId</span>
+        <strong>Category Name</strong><span>@Model.CategoryName</span>
+    </div>
+    <div class="mt-3"><a class="btn btn-outline-secondary" asp-action="Index">Back</a></div>
+</div>

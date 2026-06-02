@@ -1,0 +1,67 @@
+@{
+    var token = Context.Session.GetString("JWToken");
+    var username = Context.Session.GetString("Username") ?? "User";
+    var role = Context.Session.GetString("Role") ?? string.Empty;
+    var canManage = role == "Admin" || role == "Manager";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Retail Analytics</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    @if (string.IsNullOrWhiteSpace(token))
+    {
+        <main class="auth-shell">
+            @RenderBody()
+        </main>
+    }
+    else
+    {
+        <div class="app-shell">
+            <aside class="app-sidebar">
+                <div class="brand">Retail Analytics</div>
+                <nav class="nav flex-column">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                    <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
+                    <a class="nav-link" asp-controller="Supplier" asp-action="Index">Suppliers</a>
+                    <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
+                    <a class="nav-link" asp-controller="Inventory" asp-action="Index">Inventory</a>
+                    <a class="nav-link" asp-controller="Order" asp-action="Index">Orders</a>
+                    @if (canManage)
+                    {
+                        <a class="nav-link" asp-controller="Reports" asp-action="Index">Reports</a>
+                    }
+                </nav>
+            </aside>
+            <div class="app-main">
+                <header class="topbar">
+                    <div>
+                        <div class="page-kicker">Retail Order & Inventory Analytics</div>
+                        <h1>@ViewData["Title"]</h1>
+                    </div>
+                    <div class="user-chip">
+                        <span>@username</span>
+                        @if (!string.IsNullOrWhiteSpace(role))
+                        {
+                            <span class="badge text-bg-primary">@role</span>
+                        }
+                        <a class="btn btn-outline-secondary btn-sm" asp-controller="Account" asp-action="Logout">Logout</a>
+                    </div>
+                </header>
+                <main class="content">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

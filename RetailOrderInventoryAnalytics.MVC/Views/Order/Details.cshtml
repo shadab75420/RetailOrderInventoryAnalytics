@@ -1,0 +1,15 @@
+@model OrderViewModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+<div class="panel">
+    <div class="details-grid">
+        <strong>Order Id</strong><span>@Model.OrderId</span>
+        <strong>Order Number</strong><span>@Model.OrderNumber</span>
+        <strong>Order Date</strong><span>@Model.OrderDate.ToString("yyyy-MM-dd")</span>
+        <strong>Total Amount</strong><span>@Model.TotalAmount.ToString("C")</span>
+        <strong>Status</strong><span>@Model.Status</span>
+        <strong>User Id</strong><span>@Model.UserId</span>
+    </div>
+    <div class="mt-3"><a class="btn btn-outline-secondary" asp-action="Index">Back</a></div>
+</div>

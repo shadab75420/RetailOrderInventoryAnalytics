@@ -1,0 +1,29 @@
+@model IEnumerable<ProductViewModel>
+@{
+    ViewData["Title"] = "Products";
+    var canManage = Context.Session.GetString("Role") is "Admin" or "Manager";
+}
+<div class="panel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Product List</h2>
+        @if (canManage) { <a class="btn btn-primary btn-sm" asp-action="Create">Create</a> }
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead><tr><th>Product</th><th>Category</th><th>Supplier</th><th>Price</th><th>Stock</th><th>Reorder</th><th>Status</th><th class="text-end">Actions</th></tr></thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td><td>@item.CategoryName</td><td>@item.SupplierName</td><td>@item.UnitPrice.ToString("C")</td><td>@item.StockQuantity</td><td>@item.ReorderLevel</td>
+                    <td>@if (item.IsLowStock) { <span class="badge text-bg-danger">Low</span> } else { <span class="badge text-bg-success">OK</span> }</td>
+                    <td class="text-end">
+                        <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.ProductId">Details</a>
+                        @if (canManage) { <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

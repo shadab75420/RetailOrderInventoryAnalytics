@@ -1,0 +1,26 @@
+@model IEnumerable<CategoryViewModel>
+@{
+    ViewData["Title"] = "Categories";
+    var canManage = Context.Session.GetString("Role") is "Admin" or "Manager";
+}
+<div class="panel">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h5 mb-0">Category List</h2>
+        @if (canManage) { <a class="btn btn-primary btn-sm" asp-action="Create">Create</a> }
+    </div>
+    <table class="table table-hover">
+        <thead><tr><th>Name</th><th class="text-end">Actions</th></tr></thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.CategoryName</td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@item.CategoryId">Details</a>
+                    @if (canManage) { <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
