@@ -2,30 +2,143 @@
 @{
     ViewData["Title"] = "Register";
 }
-<div class="card shadow auth-card">
-    <div class="card-body p-4">
-    <h1 class="h3 mb-2 text-gray-900">Register</h1>
-    <p class="text-muted mb-4">Create a dashboard user</p>
-    <form asp-action="Register" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-        <div class="mb-3">
-            <label asp-for="FullName" class="form-label"></label>
-            <input asp-for="FullName" class="form-control" />
-            <span asp-validation-for="FullName" class="text-danger"></span>
+<div class="d-flex min-vh-100 w-100 flex-column flex-md-row">
+    <!-- Left panel (Branding) -->
+    <div class="d-none d-md-flex col-md-6 text-white p-5 flex-column justify-content-between align-items-start position-relative overflow-hidden auth-left-panel">
+        <!-- Decorative abstract circles for modern SaaS feel -->
+        <div class="position-absolute bg-white" style="width: 300px; height: 300px; border-radius: 50%; opacity: 0.03; top: -50px; left: -50px; pointer-events: none;"></div>
+        <div class="position-absolute bg-white" style="width: 500px; height: 500px; border-radius: 50%; opacity: 0.02; bottom: -150px; right: -150px; pointer-events: none;"></div>
+        
+        <!-- Brand logo/text -->
+        <div class="d-flex align-items-center mb-5" style="z-index: 2;">
+            <div class="sidebar-brand-icon mr-3" style="background: rgba(255, 255, 255, 0.15); box-shadow: none; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-chart-line text-white" style="font-size: 1.15rem !important;"></i>
+            </div>
+            <span class="font-weight-800" style="font-size: 1.5rem; letter-spacing: -0.025em; text-transform: uppercase;">D-inventy</span>
         </div>
-        <div class="mb-3">
-            <label asp-for="Username" class="form-label"></label>
-            <input asp-for="Username" class="form-control" />
-            <span asp-validation-for="Username" class="text-danger"></span>
+
+        <!-- Center brand visuals -->
+        <div class="my-auto" style="z-index: 2; max-width: 480px;">
+            <h1 class="font-weight-800 mb-2" style="font-size: 2.5rem; line-height: 1.15; letter-spacing: -0.03em;">Retail Order &amp; Inventory Analytics</h1>
+            <p class="text-white-50 mb-4 font-weight-600" style="font-size: 1.2rem; letter-spacing: -0.01em;">Inventory Management System</p>
+            <p class="text-white-50 mb-5" style="font-size: 0.95rem; line-height: 1.5;">A comprehensive, professional-grade ERP dashboard built to track products, monitor warehouse inventory, manage suppliers, and optimize retail transactions in real-time.</p>
+            
+            <!-- Features list -->
+            <div class="d-flex flex-column gap-3">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-white-10 mr-3 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0;">
+                        <i class="fas fa-box text-white" style="font-size: 0.9rem;"></i>
+                    </div>
+                    <span class="font-weight-600" style="font-size: 0.95rem;">Manage Products</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-white-10 mr-3 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0;">
+                        <i class="fas fa-warehouse text-white" style="font-size: 0.9rem;"></i>
+                    </div>
+                    <span class="font-weight-600" style="font-size: 0.95rem;">Track Inventory</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-white-10 mr-3 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0;">
+                        <i class="fas fa-shopping-cart text-white" style="font-size: 0.9rem;"></i>
+                    </div>
+                    <span class="font-weight-600" style="font-size: 0.95rem;">Monitor Orders</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-white-10 mr-3 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background: rgba(255, 255, 255, 0.1); flex-shrink: 0;">
+                        <i class="fas fa-file-alt text-white" style="font-size: 0.9rem;"></i>
+                    </div>
+                    <span class="font-weight-600" style="font-size: 0.95rem;">Generate Reports</span>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label asp-for="Password" class="form-label"></label>
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+
+        <!-- Footer brand watermark -->
+        <div class="text-white-50" style="font-size: 0.85rem; z-index: 2;">
+            &copy; 2026 D-inventy. All rights reserved.
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
-        <div class="mt-3 text-center"><a asp-action="Login">Back to login</a></div>
-    </form>
+    </div>
+
+    <!-- Right panel (Register Form) -->
+    <div class="col-12 col-md-6 auth-right-panel">
+        <div class="card auth-form-card p-4 p-md-5">
+            <!-- Brand logo watermark on mobile -->
+            <div class="d-flex d-md-none align-items-center mb-4">
+                <div class="sidebar-brand-icon bg-primary mr-2" style="width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-chart-line text-white" style="font-size: 1.05rem;"></i>
+                </div>
+                <span class="font-weight-800 text-gray-900" style="font-size: 1.25rem; letter-spacing: -0.025em; text-transform: uppercase;">D-inventy</span>
+            </div>
+
+            <div class="mb-4">
+                <h2 class="font-weight-800 text-gray-900 mb-1" style="font-size: 1.85rem; letter-spacing: -0.03em;">Create account</h2>
+                <p class="text-gray-500 mb-0" style="font-size: 0.95rem;">Join to manage your retail inventory.</p>
+            </div>
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3" style="font-size: 0.9rem;"></div>
+                
+                <div class="form-group mb-3">
+                    <label asp-for="FullName" class="form-label font-weight-600 text-gray-700" style="font-size: 0.85rem;"></label>
+                    <div class="position-relative">
+                        <input asp-for="FullName" class="form-control" placeholder="John Doe" style="padding-left: 2.25rem !important;" />
+                        <i class="fas fa-address-card position-absolute text-gray-400" style="left: 0.85rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem;"></i>
+                    </div>
+                    <span asp-validation-for="FullName" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Username" class="form-label font-weight-600 text-gray-700" style="font-size: 0.85rem;"></label>
+                    <div class="position-relative">
+                        <input asp-for="Username" class="form-control" placeholder="admin" style="padding-left: 2.25rem !important;" />
+                        <i class="fas fa-user position-absolute text-gray-400" style="left: 0.85rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem;"></i>
+                    </div>
+                    <span asp-validation-for="Username" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label asp-for="Password" class="form-label font-weight-600 text-gray-700" style="font-size: 0.85rem;"></label>
+                    <div class="position-relative">
+                        <input asp-for="Password" id="passwordInput" class="form-control" type="password" placeholder="••••••••" style="padding-left: 2.25rem !important; padding-right: 2.5rem !important;" />
+                        <i class="fas fa-lock position-absolute text-gray-400" style="left: 0.85rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem;"></i>
+                        <button type="button" id="togglePasswordBtn" class="password-toggle-btn" title="Toggle Password Visibility">
+                            <i id="eyeIcon" class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger" style="font-size: 0.8rem;"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block py-2 mb-3 shadow" style="font-size: 0.95rem; border-radius: 8px !important; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;">Register</button>
+                
+                <div class="text-center font-weight-600" style="font-size: 0.9rem;">
+                    <span class="text-gray-500">Already have an account?</span>
+                    <a asp-action="Login" class="text-primary ml-1" style="text-decoration: none;">Sign In</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-@section Scripts { <partial name="_ValidationScriptsPartial" /> }
+
+@section Scripts { 
+    <partial name="_ValidationScriptsPartial" /> 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var togglePasswordBtn = document.getElementById("togglePasswordBtn");
+            var passwordInput = document.getElementById("passwordInput");
+            var eyeIcon = document.getElementById("eyeIcon");
+            
+            if (togglePasswordBtn && passwordInput && eyeIcon) {
+                togglePasswordBtn.addEventListener("click", function() {
+                    if (passwordInput.type === "password") {
+                        passwordInput.type = "text";
+                        eyeIcon.classList.remove("fa-eye", "far");
+                        eyeIcon.classList.add("fa-eye-slash", "fas");
+                    } else {
+                        passwordInput.type = "password";
+                        eyeIcon.classList.remove("fa-eye-slash", "fas");
+                        eyeIcon.classList.add("fa-eye", "far");
+                    }
+                });
+            }
+        });
+    </script>
+}

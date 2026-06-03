@@ -1,0 +1,714 @@
+/* Custom variables for SaaS theme */
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --primary-light-hover: #dbeafe;
+    
+    --success: #10b981;
+    --success-light: #ecfdf5;
+    
+    --info: #06b6d4;
+    --info-light: #ecfeff;
+    
+    --warning: #f59e0b;
+    --warning-light: #fffbeb;
+    
+    --danger: #ef4444;
+    --danger-light: #fef2f2;
+    
+    --secondary: #8b5cf6;
+    --secondary-light: #f5f3ff;
+    
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --gray-900: #0f172a;
+    
+    --sidebar-bg: #0b0f19;
+    --sidebar-color: #94a3b8;
+    --sidebar-active-bg: #2563eb;
+    --sidebar-active-color: #ffffff;
+    
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+}
+
+[data-theme="dark"] {
+    --bg-main: #0b0f19;
+    --card-bg: #151f32;
+    --border-color: #1e293b;
+    --card-header-bg: #151f32;
+    
+    --gray-50: #151f32;
+    --gray-100: #1e293b;
+    --gray-200: #334155;
+    --gray-300: #475569;
+    --gray-400: #64748b;
+    --gray-500: #94a3b8;
+    --gray-600: #cbd5e1;
+    --gray-700: #e2e8f0;
+    --gray-800: #f1f5f9;
+    --gray-900: #ffffff;
+    
+    --primary-light: rgba(37, 99, 235, 0.15);
+    --success-light: rgba(16, 185, 129, 0.15);
+    --info-light: rgba(6, 182, 212, 0.15);
+    --warning-light: rgba(245, 158, 11, 0.15);
+    --danger-light: rgba(239, 68, 68, 0.15);
+    --secondary-light: rgba(139, 92, 246, 0.15);
+}
+
+/* Base resets & typography */
+body {
+    background-color: var(--bg-main) !important;
+    font-family: 'Inter', sans-serif !important;
+    color: var(--gray-800);
+    font-size: 1.05rem !important; /* Legible dashboard default size */
+}
+
+body,
+.sidebar,
+.navbar,
+.card,
+.table,
+.btn,
+.form-control {
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Custom Typography Helpers */
+.font-weight-600 { font-weight: 600 !important; }
+.font-weight-700 { font-weight: 700 !important; }
+.font-weight-800 { font-weight: 800 !important; }
+
+/* Spacing & Padding Reductions (Improve Density) */
+.container-fluid {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+/* Navbar / Topbar */
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--gray-100) !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+    padding: 0.5rem 1.5rem !important;
+    height: auto !important;
+    min-height: 72px !important; /* Height increased slightly to fit 32px Heading title */
+    display: flex;
+    align-items: center;
+}
+
+.navbar h1 {
+    font-size: 1.55rem !important;
+    font-weight: 700 !important;
+    color: var(--gray-900) !important;
+    letter-spacing: -0.025em;
+}
+
+/* Sidebar Custom Layout - Resolves Expanded/Collapsed Overlap Bug */
+.sidebar {
+    background-color: var(--sidebar-bg) !important;
+    background-image: none !important;
+    min-height: 100vh;
+    border-right: none !important;
+    box-shadow: 4px 0 24px 0 rgba(0, 0, 0, 0.03);
+    padding: 0.75rem 0.25rem !important;
+    transition: width 0.15s ease-in-out !important;
+}
+
+/* Sidebar Hover & Active Capsule colors */
+.sidebar .nav-item .nav-link {
+    color: var(--sidebar-color) !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    border-radius: 12px !important;
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-item .nav-link:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.sidebar .nav-item .nav-link:hover i {
+    color: #ffffff !important;
+}
+
+.sidebar .nav-item.active {
+    border-left: none !important;
+}
+
+.sidebar .nav-item.active .nav-link {
+    background-color: var(--sidebar-active-bg) !important;
+    color: var(--sidebar-active-color) !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25) !important;
+}
+
+.sidebar .nav-item.active .nav-link i {
+    color: var(--sidebar-active-color) !important;
+}
+
+.sidebar-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    margin: 0.75rem 1rem !important;
+}
+
+/* BRAND HEADER BOX CONFIGURATION */
+.sidebar-dark .sidebar-brand {
+    color: #ffffff !important;
+    margin-bottom: 1rem;
+    height: auto !important;
+    padding: 0.75rem 1rem !important;
+    justify-content: flex-start !important;
+}
+
+.sidebar-brand-icon {
+    background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.sidebar-brand-icon i {
+    font-size: 1.15rem !important;
+}
+
+.sidebar-brand-text {
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em;
+    color: #ffffff !important;
+    text-transform: none !important;
+}
+
+/* CASE A: Styling when the sidebar is EXPANDED (min-width: 768px and NOT toggled) */
+@media (min-width: 768px) {
+    .sidebar:not(.toggled) {
+        width: 240px !important;
+    }
+    
+    .sidebar:not(.toggled) .nav-item {
+        margin: 4px 12px !important;
+    }
+    
+    .sidebar:not(.toggled) .nav-item .nav-link {
+        display: flex !important;
+        align-items: center;
+        width: auto !important;
+        padding: 0.85rem 1.25rem !important; /* Spacious padding */
+    }
+    
+    .sidebar:not(.toggled) .nav-item .nav-link i {
+        font-size: 1.2rem !important; /* Larger sidebar icons */
+        margin-right: 0.85rem !important;
+        width: 22px;
+        text-align: center;
+        color: var(--gray-400) !important;
+    }
+    
+    .sidebar:not(.toggled) .nav-item .nav-link span {
+        display: inline !important;
+        white-space: nowrap !important;
+    }
+}
+
+/* CASE B: Styling when the sidebar is TOGGLED / COLLAPSED */
+.sidebar.toggled {
+    width: 6.5rem !important;
+    overflow: visible !important;
+}
+
+.sidebar.toggled .nav-item {
+    margin: 4px 6px !important;
+}
+
+.sidebar.toggled .nav-item .nav-link {
+    width: auto !important;
+    display: block !important;
+    text-align: center !important;
+    padding: 0.75rem 0.5rem !important;
+    border-radius: 8px !important;
+}
+
+.sidebar.toggled .nav-item .nav-link i {
+    margin-right: 0 !important;
+    font-size: 1.2rem !important;
+    display: block !important;
+    margin-bottom: 0.25rem !important;
+    color: var(--gray-400) !important;
+}
+
+.sidebar.toggled .nav-item .nav-link span {
+    font-size: 0.7rem !important;
+    display: block !important;
+    white-space: normal !important;
+    text-align: center !important;
+}
+
+.sidebar.toggled .sidebar-brand .sidebar-brand-text {
+    display: none !important;
+}
+
+/* Custom Search Input */
+.navbar .search-container {
+    position: relative;
+    max-width: 320px;
+    width: 100%;
+}
+
+.navbar .search-input {
+    background-color: var(--gray-50) !important;
+    border: 1px solid var(--gray-200) !important;
+    border-radius: 9999px !important;
+    padding: 0.5rem 1rem 0.5rem 2.5rem !important;
+    font-size: 0.95rem !important;
+    color: var(--gray-700) !important;
+    transition: all 0.2s ease !important;
+    height: 38px !important;
+}
+
+.navbar .search-input:focus {
+    background-color: #ffffff !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+    outline: none !important;
+}
+
+.navbar .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    pointer-events: none;
+    font-size: 0.95rem;
+}
+
+/* Dropdowns */
+.navbar #userDropdown {
+    border-radius: 8px;
+    padding: 0.25rem 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.navbar #userDropdown:hover {
+    background-color: var(--gray-50);
+}
+
+.navbar .img-profile {
+    width: 36px !important;
+    height: 36px !important;
+    border: 2px solid var(--gray-100);
+}
+
+.navbar .badge-counter {
+    background-color: var(--danger) !important;
+    top: 8px !important;
+    right: 8px !important;
+    border: 2px solid #ffffff;
+}
+
+.navbar .badge-primary {
+    background-color: var(--primary-light) !important;
+    color: var(--primary) !important;
+    font-weight: 600;
+    padding: 0.35em 0.65em;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+/* Cards (Auto-size cards, border-radius 16px, soft shadow) */
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--gray-100) !important;
+    border-radius: 16px !important; /* Border radius: 16px */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    overflow: hidden;
+    height: auto !important; /* Force cards to only wrap contents */
+}
+
+.card.shadow {
+    box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.04) !important; /* Soft shadow */
+}
+
+/* Subtle card lift-up hover animation */
+.card-dashboard:hover {
+    transform: translateY(-4px) !important; /* Small lift animation */
+    box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08) !important; /* Slight shadow increase */
+}
+
+.card-header {
+    background-color: var(--card-bg) !important;
+    border-bottom: 1px solid var(--gray-100) !important;
+    padding: 1rem 1.5rem !important;
+}
+
+.card-header h6 {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--gray-900) !important;
+    margin: 0;
+}
+
+.card-body {
+    padding: 1.25rem !important;
+}
+
+/* KPI Cards Layout (Redesigned with height 120px and 1.25rem 1.5rem padding) */
+.card-dashboard {
+    min-height: 120px !important; /* Increased height to avoid feeling compressed */
+}
+
+.card-dashboard .card-body {
+    padding: 1.25rem 1.5rem !important; /* Increased padding */
+}
+
+.kpi-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.kpi-card > div:first-child {
+    padding-right: 64px; /* safe zone to prevent text overlapping the icon */
+}
+
+.kpi-title {
+    font-size: 13px !important; /* Label: 12-13px */
+    font-weight: 600 !important; /* Weight 600 */
+    letter-spacing: 0.05em;
+    color: var(--gray-500) !important;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem !important; /* Increased spacing between title and value */
+}
+
+.kpi-value {
+    font-size: 2.25rem !important; /* Value: ~36px */
+    font-weight: 800 !important; /* Weight 800 */
+    color: var(--gray-900) !important;
+    line-height: 1.1;
+    white-space: nowrap !important;
+    overflow: visible !important;
+}
+
+/* Responsive font scaling for KPI values on standard/narrow displays */
+@media (min-width: 1600px) {
+    .kpi-value {
+        font-size: 2.625rem !important; /* 42px on wide monitors */
+    }
+}
+@media (max-width: 1599px) {
+    .kpi-value {
+        font-size: 2.15rem !important; /* ~34px on laptops */
+    }
+}
+@media (max-width: 1200px) {
+    .kpi-value {
+        font-size: 1.6rem !important; /* ~26px on tablets */
+    }
+}
+
+.kpi-icon-wrapper {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px; /* Increased size to 52-56px */
+    height: 54px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.45rem; /* Larger icon size */
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0 !important;
+}
+
+.card-dashboard:hover .kpi-icon-wrapper {
+    transform: scale(1.08) rotate(3deg);
+}
+
+.kpi-icon-primary { background-color: var(--primary-light) !important; color: var(--primary) !important; }
+.kpi-icon-success { background-color: var(--success-light) !important; color: var(--success) !important; }
+.kpi-icon-info { background-color: var(--info-light) !important; color: var(--info) !important; }
+.kpi-icon-warning { background-color: var(--warning-light) !important; color: var(--warning) !important; }
+.kpi-icon-danger { background-color: var(--danger-light) !important; color: var(--danger) !important; }
+.kpi-icon-secondary { background-color: var(--secondary-light) !important; color: var(--secondary) !important; }
+
+/* Table Sizing & Font Increments */
+.table th {
+    font-size: 0.875rem !important;
+    font-weight: 700 !important; /* Table Headers Weight 700 */
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--gray-500) !important;
+    border-bottom: 2px solid var(--gray-200) !important;
+    border-top: none !important;
+    padding: 0.75rem 1rem !important;
+    background-color: var(--gray-50) !important;
+}
+
+.table td {
+    font-size: 0.975rem !important;
+    color: var(--gray-800) !important;
+    border-top: none !important;
+    border-bottom: 1px solid var(--gray-100) !important;
+    padding: 0.65rem 1rem !important; /* Tighter padding for compact layout */
+    vertical-align: middle !important;
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: none !important;
+    border-bottom: 1px solid var(--gray-100) !important;
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--gray-50) !important; /* dynamic hover background */
+}
+
+/* Badges / Pill tags */
+.badge {
+    padding: 0.35rem 0.75rem !important;
+    font-weight: 600 !important;
+    font-size: 0.825rem !important;
+    border-radius: 9999px !important;
+}
+
+.badge.bg-success, .badge-success { 
+    background-color: var(--success-light) !important; 
+    color: #065f46 !important; 
+    border: 1px solid rgba(16, 185, 129, 0.25) !important; 
+    padding: 0.4rem 0.85rem !important; 
+    font-size: 0.8rem !important; 
+    font-weight: 700 !important; 
+}
+.badge.bg-danger, .badge-danger { 
+    background-color: var(--danger-light) !important; 
+    color: #991b1b !important; 
+    border: 1px solid rgba(239, 68, 68, 0.25) !important; 
+    padding: 0.4rem 0.85rem !important; 
+    font-size: 0.8rem !important; 
+    font-weight: 700 !important; 
+}
+.badge.bg-warning, .badge-warning { 
+    background-color: var(--warning-light) !important; 
+    color: #92400e !important; 
+    border: 1px solid rgba(245, 158, 11, 0.25) !important; 
+    padding: 0.4rem 0.85rem !important; 
+    font-size: 0.8rem !important; 
+    font-weight: 700 !important; 
+}
+.badge.bg-info, .badge-info { 
+    background-color: var(--info-light) !important; 
+    color: #155e75 !important; 
+    border: 1px solid rgba(6, 182, 212, 0.25) !important; 
+    padding: 0.4rem 0.85rem !important; 
+    font-size: 0.8rem !important; 
+    font-weight: 700 !important; 
+}
+
+[data-theme="dark"] .badge.bg-success, [data-theme="dark"] .badge-success { color: #34d399 !important; }
+[data-theme="dark"] .badge.bg-danger, [data-theme="dark"] .badge-danger { color: #f87171 !important; }
+[data-theme="dark"] .badge.bg-warning, [data-theme="dark"] .badge-warning { color: #fbbf24 !important; }
+[data-theme="dark"] .badge.bg-info, [data-theme="dark"] .badge-info { color: #22d3ee !important; }
+
+/* Buttons & Inputs */
+.btn {
+    border-radius: 6px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 0.5rem 1.25rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: none !important;
+}
+
+.btn-sm {
+    padding: 0.3rem 0.75rem !important;
+    font-size: 0.85rem !important;
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+}
+
+.form-control, .form-select {
+    border-radius: 6px !important;
+    border: 1px solid var(--gray-200) !important;
+    background-color: var(--card-bg) !important;
+    color: var(--gray-900) !important;
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.975rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+    outline: none !important;
+    background-color: var(--card-bg) !important;
+    color: var(--gray-900) !important;
+}
+
+/* Split-Screen Authentication Layout CSS */
+.min-vh-100 {
+    min-height: 100vh !important;
+}
+.w-100 {
+    width: 100% !important;
+}
+
+.auth-shell {
+    min-height: 100vh;
+    padding: 0 !important; /* Full screen split view bleed */
+    background-color: #f8fafc !important;
+}
+
+.auth-card {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    width: 100% !important;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+/* Reduced Chart Heights to Prevent Excessive Vertical Height */
+.chart-area {
+    position: relative;
+    height: 250px !important; /* Reduced line chart height */
+    width: 100%;
+}
+
+.chart-pie {
+    position: relative;
+    height: 220px !important; /* Reduced doughnut chart height */
+    width: 100%;
+}
+
+/* Live indicator */
+.badge-live {
+    background-color: var(--primary-light) !important;
+    color: var(--primary) !important;
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    font-size: 0.825rem !important;
+    padding: 0.25rem 0.6rem !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.badge-live::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    animation: pulse-live 1.5s infinite;
+}
+
+@keyframes pulse-live {
+    0% { transform: scale(0.9); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.5; }
+    100% { transform: scale(0.9); opacity: 1; }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}
+
+/* Theme Toggle Button Styling */
+#themeToggleBtn {
+    transition: transform 0.2s ease;
+}
+#themeToggleBtn:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Eye Password visibility toggle icon and button styling */
+.password-toggle-btn {
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+.password-toggle-btn:focus, .password-toggle-btn:hover {
+    color: var(--primary) !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Split-Screen Authentication Layout CSS */
+.auth-left-panel {
+    background: linear-gradient(135deg, #0b0f19 0%, #1e3a8a 50%, #2563eb 100%) !important;
+}
+.auth-right-panel {
+    background-color: var(--bg-main) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem !important;
+}
+.auth-form-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+    width: 100%;
+    max-width: 440px;
+}

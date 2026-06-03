@@ -5,6 +5,7 @@
     var isAdmin = role == "Admin";
     var isManager = role == "Manager";
     var isStaff = role == "Staff";
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString() ?? "Dashboard";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +13,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Retail Analytics</title>
+    <script>
+        (function() {
+            var theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <link href="~/sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <link href="~/sbadmin/css/sb-admin-2.min.css" rel="stylesheet" />
-    <link href="~/sbadmin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/custom.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/sbadmin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body id="page-top">
     @if (string.IsNullOrWhiteSpace(token))
@@ -30,31 +41,71 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Dashboard" asp-action="Index">
                     <div class="sidebar-brand-icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="sidebar-brand-text mx-3">Retail Analytics</div>
+                    <div class="sidebar-brand-text mx-2">D-inventy</div>
                 </a>
                 <hr class="sidebar-divider my-0" />
-                <li class="nav-item"><a class="nav-link" asp-controller="Dashboard" asp-action="Index"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                <li class="nav-item @(currentController == "Dashboard" ? "active" : "")">
+                    <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
                 @if (isAdmin)
                 {
-                    <li class="nav-item"><a class="nav-link" asp-controller="User" asp-action="Index"><i class="fas fa-fw fa-users-cog"></i><span>Users</span></a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Category" asp-action="Index"><i class="fas fa-fw fa-tags"></i><span>Categories</span></a></li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Supplier" asp-action="Index"><i class="fas fa-fw fa-truck"></i><span>Suppliers</span></a></li>
+                    <li class="nav-item @(currentController == "User" ? "active" : "")">
+                        <a class="nav-link" asp-controller="User" asp-action="Index">
+                            <i class="fas fa-fw fa-users-cog"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @(currentController == "Category" ? "active" : "")">
+                        <a class="nav-link" asp-controller="Category" asp-action="Index">
+                            <i class="fas fa-fw fa-tags"></i>
+                            <span>Categories</span>
+                        </a>
+                    </li>
+                    <li class="nav-item @(currentController == "Supplier" ? "active" : "")">
+                        <a class="nav-link" asp-controller="Supplier" asp-action="Index">
+                            <i class="fas fa-fw fa-truck"></i>
+                            <span>Suppliers</span>
+                        </a>
+                    </li>
                 }
                 @if (isAdmin || isManager || isStaff)
                 {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Product" asp-action="Index"><i class="fas fa-fw fa-box"></i><span>Products</span></a></li>
+                    <li class="nav-item @(currentController == "Product" ? "active" : "")">
+                        <a class="nav-link" asp-controller="Product" asp-action="Index">
+                            <i class="fas fa-fw fa-box"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
                 }
                 @if (isAdmin || isManager)
                 {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Inventory" asp-action="Index"><i class="fas fa-fw fa-warehouse"></i><span>Inventory</span></a></li>
+                    <li class="nav-item @(currentController == "Inventory" ? "active" : "")">
+                        <a class="nav-link" asp-controller="Inventory" asp-action="Index">
+                            <i class="fas fa-fw fa-warehouse"></i>
+                            <span>Inventory</span>
+                        </a>
+                    </li>
                 }
                 @if (isAdmin || isManager || isStaff)
                 {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Order" asp-action="Index"><i class="fas fa-fw fa-shopping-cart"></i><span>Orders</span></a></li>
+                    <li class="nav-item @(currentController == "Order" ? "active" : "")">
+                        <a class="nav-link" asp-controller="Order" asp-action="Index">
+                            <i class="fas fa-fw fa-shopping-cart"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
                 }
                 @if (isAdmin)
                 {
-                    <li class="nav-item"><a class="nav-link" asp-controller="Reports" asp-action="Index"><i class="fas fa-fw fa-file-alt"></i><span>Reports</span></a></li>
+                    <li class="nav-item @(currentController == "Reports" ? "active" : "")">
+                        <a class="nav-link" asp-controller="Reports" asp-action="Index">
+                            <i class="fas fa-fw fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
                 }
                 <hr class="sidebar-divider d-none d-md-block" />
                 <div class="text-center d-none d-md-inline">
@@ -63,13 +114,39 @@
             </ul>
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-3 static-top shadow">
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                        
                         <h1 class="h5 mb-0 text-gray-800">@ViewData["Title"]</h1>
-                        <ul class="navbar-nav ml-auto">
+                        
+                        <!-- Search container in center of navbar -->
+                        <div class="search-container d-none d-md-block mx-auto">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="form-control search-input" placeholder="Search anything...">
+                        </div>
+                        
+                        <ul class="navbar-nav ml-auto align-items-center">
+                            <!-- Light/Dark Theme Toggle -->
+                            <li class="nav-item mx-2">
+                                <button id="themeToggleBtn" class="btn btn-link nav-link p-2" style="color: var(--gray-500); border: none; background: transparent; outline: none; box-shadow: none !important;" title="Toggle Light/Dark Mode">
+                                    <i id="themeToggleIcon" class="far fa-moon" style="font-size: 1.15rem;"></i>
+                                </button>
+                            </li>
+                            
+                            <!-- Alert Bell Icon -->
+                            <li class="nav-item dropdown no-arrow mx-2">
+                                <a class="nav-link dropdown-toggle position-relative p-2" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="far fa-bell" style="font-size: 1.15rem; color: var(--gray-500);"></i>
+                                    <span class="badge-counter position-absolute bg-danger rounded-circle" style="width: 6px; height: 6px; padding: 0; min-width: 0; top: 12px; right: 8px;"></span>
+                                </a>
+                            </li>
+                            
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            
+                            <!-- Profile Dropdown -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@username</span>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-600">@username</span>
                                     @if (!string.IsNullOrWhiteSpace(role))
                                     {
                                         <span class="badge badge-primary mr-2">@role</span>
@@ -86,10 +163,12 @@
                         @RenderBody()
                     </div>
                 </div>
-                <footer class="sticky-footer bg-white">
+                <footer class="sticky-footer bg-white border-top py-3" style="background-color: var(--card-bg) !important; border-color: var(--gray-100) !important;">
                     <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Retail Order & Inventory Analytics</span>
+                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-gray-500" style="font-size: 0.85rem;">
+                            <span class="mb-1 mb-md-0 font-weight-600">Retail Order &amp; Inventory Analytics</span>
+                            <span class="mb-1 mb-md-0">Version 1.0</span>
+                            <span>&copy; 2026</span>
                         </div>
                     </div>
                 </footer>
@@ -105,6 +184,7 @@
     <script src="~/sbadmin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="~/sbadmin/vendor/chart.js/Chart.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/theme.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
