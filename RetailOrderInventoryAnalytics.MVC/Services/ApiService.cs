@@ -4,7 +4,8 @@ using System.Text.Json;
 
 namespace RetailOrderInventoryAnalytics.MVC.Services;
 
-public class ApiService
+public class ApiService // this class is used to make API calls to the backend, it abstracts away the details of making HTTP requests and handling responses, making it easier for other parts of the application
+                        // to interact with the API without worrying about the underlying implementation.
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
     private readonly IHttpClientFactory _httpClientFactory;
@@ -33,7 +34,8 @@ public class ApiService
         var response = await CreateClient().PostAsync(endpoint, CreateJson(model));
         return await ReadResponse<TResult>(response);
     }
-
+    // this method is used to send a PUT request to the specified endpoint with the provided model,
+    // and it returns a boolean indicating whether the request was successful based on the HTTP status code of the response.
     public async Task<bool> PutAsync<T>(string endpoint, T model)
     {
         var response = await CreateClient().PutAsync(endpoint, CreateJson(model));
