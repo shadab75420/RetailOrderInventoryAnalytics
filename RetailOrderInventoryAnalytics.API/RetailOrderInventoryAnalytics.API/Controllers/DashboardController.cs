@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RetailOrderInventoryAnalytics.API.Services.Interfaces;
 
@@ -6,7 +6,7 @@ namespace RetailOrderInventoryAnalytics.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Manager")]
+    [Authorize(Roles = "Admin,Manager,Staff")]
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _dashboardService;
