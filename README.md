@@ -1,5 +1,5 @@
 # RetailPulse
-
+ 
 > Smart Retail Order & Inventory Analytics Platform
 
 RetailPulse is a modern Inventory and Order Management System developed using ASP.NET Core MVC, ASP.NET Core Web API, Entity Framework Core, SQL Server, JWT Authentication, Repository Pattern, Service Layer Pattern, SOLID Principles, and MSTest.
